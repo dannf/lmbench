@@ -1,0 +1,15 @@
+usr/bin
+usr/include/lmbench
+usr/lib
+usr/lib/lmbench
+usr/lib/lmbench/scripts
+usr/share/doc
+usr/share/doc/lmbench
+usr/share/lmbench
+usr/share/lmbench/src
+usr/share/man
+usr/share/man/man1
+usr/share/man/man3
+usr/share/man/man8
+var/lib/lmbench/config
+var/lib/lmbench/results

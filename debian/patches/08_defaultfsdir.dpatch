@@ -1,0 +1,25 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 08_defaultfsdir.dpatch by  <ahs3@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad wip.hg~/lmbench-3.0-a9/scripts/config-run wip.hg/lmbench-3.0-a9/scripts/config-run
+--- wip.hg~/lmbench-3.0-a9/scripts/config-run	2009-02-22 22:22:10.000000000 -0700
++++ wip.hg/lmbench-3.0-a9/scripts/config-run	2009-02-22 22:22:40.000000000 -0700
+@@ -626,13 +626,7 @@
+ system.
+ 
+ EOF
+-	DEFAULTFSDIR=/var/tmp
+-	for t in /var/tmp /tmp; do
+-		if [ -d $t -a -w $t ]
+-		then	DEFAULTFSDIR=$t
+-			break
+-		fi
+-	done
++	DEFAULTFSDIR=/var/tmp/lmbench
+ 	echo $ECHON "FSDIR [default $DEFAULTFSDIR]: $ECHOC"
+ 	read FSDIR
+ 	if [ X$FSDIR = X ]

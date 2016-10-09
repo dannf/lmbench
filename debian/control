@@ -1,0 +1,38 @@
+Source: lmbench
+Section: non-free/admin
+Priority: optional
+Maintainer: Al Stone <ahs3@debian.org>
+Build-Depends: docbook-to-man, debhelper (>= 5), dpatch
+Standards-Version: 3.8.0
+Homepage: http://www.bitmover.com/lmbench/
+XS-Autobuild: yes
+
+Package: lmbench
+Architecture: any
+Recommends: lmbench-doc
+Depends: gcc, perl, libc6-dev | libc-dev, ${shlibs:Depends}, ${misc:Depends}
+Description: Utilities to benchmark UNIX systems
+ Lmbench is a set of utilities to test the performance
+ of a unix system producing detailed results as well
+ as providing tools to process them. It includes a series of
+ micro benchmarks that measure some basic operating 
+ system and hardware metrics:
+ .
+  * file reading and summing
+  * memory bandwidth while reading, writing and copying
+  * copying data through pipes
+  * copying data through Unix sockets
+  * reading data through TCP/IP sockets
+
+Package: lmbench-doc
+Section: non-free/doc
+Architecture: all
+Depends: ${misc:Depends}
+Description: Documentation for the lmbench benchmark suite
+ This package provides all the documentation included 
+ in the lmbench benchmark software. This includes:
+ .
+  * references to published articles
+  * presentations made by lmbench authors
+  * the rebuttal of an article claiming lmbench is flawed
+

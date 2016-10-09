@@ -1,0 +1,17 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 04_bw_tcp.dpatch by  <ahs3@fcboson>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad trunk~/lmbench-3.0-a9/doc/bw_tcp.8 trunk/lmbench-3.0-a9/doc/bw_tcp.8
+--- trunk~/lmbench-3.0-a9/doc/bw_tcp.8	2000-10-16 09:14:01.000000000 -0600
++++ trunk/lmbench-3.0-a9/doc/bw_tcp.8	2006-04-02 17:39:51.000000000 -0600
+@@ -1,5 +1,5 @@
+ .\" $Id$
+-.TH BW_TCP 1 "$Date$" "(c)1994 Larry McVoy" "LMBENCH"
++.TH BW_TCP 8 "$Date$" "(c)1994 Larry McVoy" "LMBENCH"
+ .SH NAME
+ bw_tcp \- time data movement through TCP/IP sockets
+ .SH SYNOPSIS

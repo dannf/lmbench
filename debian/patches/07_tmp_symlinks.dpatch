@@ -1,0 +1,109 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 07_tmp_symlinks.dpatch by  <ahs3@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad wip.hg~/lmbench-3.0-a9/src/bench.h wip.hg/lmbench-3.0-a9/src/bench.h
+--- wip.hg~/lmbench-3.0-a9/src/bench.h	2006-06-27 10:27:19.000000000 -0600
++++ wip.hg/lmbench-3.0-a9/src/bench.h	2009-02-22 21:08:19.000000000 -0700
+@@ -119,9 +119,9 @@
+ #define	VERS		(u_long)1
+ #endif
+ 
+-#define	UNIX_CONTROL	"/tmp/lmbench.ctl"
+-#define	UNIX_DATA	"/tmp/lmbench.data"
+-#define	UNIX_LAT	"/tmp/lmbench.lat"
++#define	UNIX_CONTROL	"/var/tmp/lmbench/lmbench.ctl"
++#define	UNIX_DATA	"/var/tmp/lmbench/lmbench.data"
++#define	UNIX_LAT	"/var/tmp/lmbench/lmbench.lat"
+ 
+ /*
+  * socket send/recv buffer optimizations
+diff -urNad wip.hg~/lmbench-3.0-a9/src/lat_fcntl.c wip.hg/lmbench-3.0-a9/src/lat_fcntl.c
+--- wip.hg~/lmbench-3.0-a9/src/lat_fcntl.c	2007-05-10 08:17:02.000000000 -0600
++++ wip.hg/lmbench-3.0-a9/src/lat_fcntl.c	2009-02-22 21:09:05.000000000 -0700
+@@ -102,8 +102,8 @@
+ 
+ 	if (iterations) return;
+ 
+-	sprintf(state->filename1, "/tmp/lmbench-fcntl%d.1", getpid());
+-	sprintf(state->filename2, "/tmp/lmbench-fcntl%d.2", getpid());
++	sprintf(state->filename1, "/var/tmp/lmbench/lmbench-fcntl%d.1", getpid());
++	sprintf(state->filename2, "/var/tmp/lmbench/lmbench-fcntl%d.2", getpid());
+ 	state->pid = 0;
+ 	state->fd1 = -1;
+ 	state->fd2 = -1;
+diff -urNad wip.hg~/lmbench-3.0-a9/src/lat_fifo.c wip.hg/lmbench-3.0-a9/src/lat_fifo.c
+--- wip.hg~/lmbench-3.0-a9/src/lat_fifo.c	2007-05-10 08:17:02.000000000 -0600
++++ wip.hg/lmbench-3.0-a9/src/lat_fifo.c	2009-02-22 21:09:23.000000000 -0700
+@@ -12,8 +12,8 @@
+ 
+ #include "bench.h"
+ 
+-#define	F1	"/tmp/lmbench_f1.%d"
+-#define	F2	"/tmp/lmbench_f2.%d"
++#define	F1	"/var/tmp/lmbench/lmbench_f1.%d"
++#define	F2	"/var/tmp/lmbench/lmbench_f2.%d"
+ 
+ void initialize(iter_t iterations, void *cookie);
+ void cleanup(iter_t iterations, void *cookie);
+diff -urNad wip.hg~/lmbench-3.0-a9/src/lat_proc.c wip.hg/lmbench-3.0-a9/src/lat_proc.c
+--- wip.hg~/lmbench-3.0-a9/src/lat_proc.c	2007-05-10 08:17:03.000000000 -0600
++++ wip.hg/lmbench-3.0-a9/src/lat_proc.c	2009-02-22 21:09:50.000000000 -0700
+@@ -17,10 +17,10 @@
+ 
+ 
+ #ifdef STATIC
+-#define	PROG "/tmp/hello-s"
++#define	PROG "/var/tmp/lmbench/hello-s"
+ #define STATIC_PREFIX "Static "
+ #else
+-#define	PROG "/tmp/hello"
++#define	PROG "/var/tmp/lmbench/hello"
+ #define STATIC_PREFIX ""
+ #endif
+ 
+diff -urNad wip.hg~/lmbench-3.0-a9/src/lat_unix_connect.c wip.hg/lmbench-3.0-a9/src/lat_unix_connect.c
+--- wip.hg~/lmbench-3.0-a9/src/lat_unix_connect.c	2007-05-10 08:17:05.000000000 -0600
++++ wip.hg/lmbench-3.0-a9/src/lat_unix_connect.c	2009-02-22 21:10:06.000000000 -0700
+@@ -15,7 +15,7 @@
+ char	*id = "$Id$\n";
+ #include "bench.h"
+ 
+-#define CONNAME "/tmp/af_unix"
++#define CONNAME "/var/tmp/lmbench/af_unix"
+ 
+ void server_main(void);
+ 
+diff -urNad wip.hg~/lmbench-3.0-a9/src/rhttp.c wip.hg/lmbench-3.0-a9/src/rhttp.c
+--- wip.hg~/lmbench-3.0-a9/src/rhttp.c	2000-01-31 16:05:45.000000000 -0700
++++ wip.hg/lmbench-3.0-a9/src/rhttp.c	2009-02-22 21:03:36.000000000 -0700
+@@ -78,7 +78,7 @@
+ 		if (fork() == 0) {
+ 			char	name[30];
+ 
+-			sprintf(name, "/tmp/rhttp%d", i);
++			sprintf(name, "/var/tmp/lmbench/rhttp%d", i);
+ 			creat(name, 0666);
+ 			close(2);
+ 			dup(1);
+@@ -93,7 +93,7 @@
+ 		}
+ 		wait(0);
+ 	}
+-	system("cat /tmp/rhttp*; rm /tmp/rhttp*"); 
++	system("cat /var/tmp/lmbench/rhttp*; rm /var/tmp/lmbench/rhttp*"); 
+ 	exit(1);
+ 	for (i = 1; i < ac; ++i) {
+ 		int	fd, n, m = 0;
+@@ -103,7 +103,7 @@
+ 		if (!strcmp("-p", av[i])) {
+ 			break;
+ 		}
+-		sprintf(buf, "/tmp/http%d", i);
++		sprintf(buf, "/var/tmp/lmbench/http%d", i);
+ 		fd = open(buf, 0);
+ 		unlink(buf);
+ 		/* 

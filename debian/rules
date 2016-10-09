@@ -1,0 +1,163 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper. 
+# GNU copyright 1997 by Joey Hess.
+#
+# This version is for a hypothetical package that builds an
+# architecture-dependant package, as well as an architecture-independent
+# package.
+
+# Uncomment this to turn on verbose mode. 
+#export DH_VERBOSE=1
+
+H_ARCH=$(shell dpkg-architecture -qDEB_HOST_ARCH) 
+ifeq ($(H_ARCH),arm)
+OPTIMIZATION=-O0
+else
+OPTIMIZATION=-O
+endif
+
+LMBENCH_VERSION=3.0-a9
+
+unpack: unpack-stamp
+unpack-stamp:
+	dh_testdir
+	tar xvzf lmbench-$(LMBENCH_VERSION).tgz
+	touch unpack-stamp
+
+patch: patch-stamp
+patch-stamp: unpack
+	dh_testdir
+	dpatch apply-all
+	touch patch-stamp
+
+configure: configure-stamp
+configure-stamp: patch
+	dh_testdir
+	# Add here commands to configure the package.
+
+	touch configure-stamp
+
+build-arch: build
+build-indep: build
+build: build-stamp
+build-stamp: configure-stamp 
+	dh_testdir
+
+	# Add here commands to compile the package.
+	$(MAKE) -C lmbench-$(LMBENCH_VERSION)
+	docbook-to-man debian/lmbench-run.sgml >debian/lmbench-run.1
+
+	touch build-stamp
+
+unpatch: clean unpack
+
+clean:
+	dh_testdir
+	dh_testroot
+	-rm debian/lmbench-run.1
+	-rm -rf run/
+	rm -f build-stamp configure-stamp unpack-stamp patch-stamp
+	rm -rf debian/patched
+	rm -rf lmbench-$(LMBENCH_VERSION)
+	dh_clean
+	rm -f debian/files
+
+install: DH_OPTIONS=
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	#-- install all the lmbench binaries and such
+	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		bin usr/lib/lmbench
+	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		results usr/share/lmbench
+	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		scripts usr/lib/lmbench
+	mv debian/lmbench/usr/lib/lmbench/scripts/SHIT \
+	   debian/lmbench/usr/lib/lmbench/scripts/STUFF
+	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		src/webpage-lm.tar usr/share/lmbench/src
+	install -m 755 debian/lmbench-run \
+		 $(CURDIR)/debian/lmbench/usr/bin
+	dh_install -p lmbench debian/lmbench-run.1 usr/share/man/man1
+	dh_link usr/share/man/man8/lmbench.8.gz usr/share/man/man8/lmhttp.8.gz
+	dh_link usr/share/man/man8/lmbench.8.gz usr/share/man/man8/msleep.8.gz
+	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		README usr/share/doc/lmbench
+	chmod -x debian/lmbench/usr/lib/lmbench/scripts/Makefile
+	chmod -x debian/lmbench/usr/lib/lmbench/scripts/README
+	chmod -x debian/lmbench/usr/lib/lmbench/scripts/TODO
+	chmod -x debian/lmbench/usr/lib/lmbench/scripts/info-template
+
+	#-- install the documentation
+	dh_install -p lmbench-doc --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		hbench-REBUTTAL usr/share/doc/lmbench-doc
+	dh_install -p lmbench-doc --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		src/TODO usr/share/doc/lmbench-doc
+	dh_install -p lmbench-doc --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		doc/* usr/share/doc/lmbench-doc
+	dh_install -p lmbench-doc --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		README usr/share/doc/lmbench-doc
+
+	#-- install all the man pages
+	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		doc/*.1 usr/share/man/man1
+	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		doc/*.3 usr/share/man/man3
+	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		doc/*.8 usr/share/man/man8
+
+	#-- but move some that have duplicate names in other packages,
+	#   and put copies of everything in lmbench-doc, just in case
+	rm -f debian/lmbench/usr/share/man/man1/graph.1
+	rm -f debian/lmbench/usr/share/man/man1/rccs.1
+	rm -f debian/lmbench/usr/share/man/man8/bargraph.8
+	rm -f debian/lmbench/usr/share/man/man8/hello.8
+	dh_install -p lmbench-doc --sourcedir=lmbench-$(LMBENCH_VERSION) \
+		doc/*.[1-9] usr/share/doc/lmbench-doc/man
+	gzip debian/lmbench-doc/usr/share/doc/lmbench-doc/man/*
+
+	#-- and then clean up some of the odds and ends
+	dh_link -p lmbench-doc usr/share/doc/lmbench-doc/man/lmbench.8 \
+		usr/share/doc/lmbench-doc/man/hello.8
+	dh_link -p lmbench-doc usr/share/doc/lmbench-doc/man/lmbench.8 \
+		usr/share/doc/lmbench-doc/man/flushdisk.8
+	dh_link -p lmbench-doc usr/share/doc/lmbench-doc/man/lmbench.8 \
+		usr/share/doc/lmbench-doc/man/memsize.8
+
+# Build architecture-independent files here.
+# Pass -i to all debhelper commands in this target to reduce clutter.
+binary-indep: build install
+	dh_testdir -i
+	dh_testroot -i
+	dh_installdocs --sourcedir=lmbench-$(LMBENCH_VERSION) -i
+	dh_installchangelogs  -i
+	dh_link -i
+	dh_compress -i
+	dh_fixperms -i
+	dh_installdeb -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir -a
+	dh_testroot -a
+	dh_installdocs --sourcedir=lmbench-$(LMBENCH_VERSION) -a
+	dh_installchangelogs  -a
+	dh_strip -a
+	dh_link -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_installdeb -a
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+binary: binary-indep binary-arch
+.PHONY: build build-arch build-indep clean binary-indep binary-arch binary install configure

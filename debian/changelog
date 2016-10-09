@@ -1,0 +1,170 @@
+lmbench (3.0-a9-1.3) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add XS-Autobuild: yes after getting the package whitelisted for
+    autobuilding.  (Closes: #717243)
+
+ -- Andreas Beckmann <anbe@debian.org>  Sun, 09 Oct 2016 20:59:51 +0200
+
+lmbench (3.0-a9-1.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add build-arch/build-indep targets.  (Closes: #822051)
+  * Switch to debhelper compat level 5.  (Closes: #817567)
+
+ -- Andreas Beckmann <anbe@debian.org>  Sun, 18 Sep 2016 02:12:05 +0200
+
+lmbench (3.0-a9-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Do not ship /var/{run,tmp}/lmbench.  (Closes: #689897)
+  * Add Homepage: http://www.bitmover.com/lmbench/
+  * Fix typos.  (Closes: #626676, #697536, #707013)
+
+ -- Andreas Beckmann <anbe@debian.org>  Wed, 28 Jan 2015 19:08:15 +0100
+
+lmbench (3.0-a9-1) unstable; urgency=low
+
+  * Update to latest upstream (3.0-a9).
+  * Update to latest Standards-Version. 
+  * Incorporate Ubuntu patch: depend on libc6-dev (LP: #246618)
+  * Closes: bug#470279 -- replaced all uses of /usr/tmp with /var/tmp
+  * Closes: bug#496427 -- removed risk of /tmp symlink attacks by moving
+    all usage of /tmp to /var/tmp/lmbench
+
+ -- Al Stone <ahs3@debian.org>  Sun, 22 Feb 2009 18:20:00 -0700
+
+lmbench (3.0-a7-1) unstable; urgency=low
+
+  * Update to latest upstream. 
+  * Update to latest Standards-Version.
+
+ -- Al Stone <ahs3@debian.org>  Sat, 21 Oct 2006 18:29:00 -0600
+
+lmbench (3.0-a5-3) unstable; urgency=low
+
+  * Closes: bug#358785 -- missing manpage causes dangling symlinks 
+  * bw_tcp.8 had wrong .TH man header value
+
+ -- Al Stone <ahs3@debian.org>  Sun,  2 Apr 2006 16:48:02 -0600
+
+lmbench (3.0-a5-2) unstable; urgency=low
+
+  * Closes: bug#299064 -- remove use of swear word as name of a script 
+
+ -- Al Stone <ahs3@debian.org>  Wed, 22 Mar 2006 15:57:17 -0700
+
+lmbench (3.0-a5-1) unstable; urgency=low
+
+  * Update to latest source (http://sourceforge.net.projects/lmbench).
+  * Toss out the old build method (dependent on BitKeeper) and replace
+    with patches to upstream tarball.
+  * Update Debian standards version.
+  * Closes: bug#296594: lmbench-run fails upon saving configuration
+  * Closes: bug#302662: 'man lmbench' typos: "fundemental" 
+
+ -- Al Stone <ahs3@debian.org>  Tue, 21 Mar 2006 23:22:01 -0700
+
+lmbench (2.0-patch2-9) unstable; urgency=low
+
+  * Update to latest source.
+  * Closes: bug#267207 -- sparc binaries are 64-bit; needed to build
+    and upload on sparc, sparc64
+  * Closes: bug#270782 -- clock(8) man page still conflicting; needed
+    to build and upload for PowerPC
+  * Closes: bug#271251 -- recent version not available for PowerPC;
+    needed to build and upload for PowerPC
+  * Closes: bug#273446 -- typo in Makefile and PPC build failed; fixed,
+    rebuilt and uploaded
+
+ -- Al Stone <ahs3@debian.org>  Wed, 13 Oct 2004 16:18:45 -0600
+
+lmbench (2.0-patch2-8) unstable; urgency=low
+
+  * Actually close #260792 this time -- thinko. 
+
+ -- Al Stone <ahs3@debian.org>  Thu,  2 Sep 2004 17:44:12 -0600
+
+lmbench (2.0-patch2-7) unstable; urgency=low
+
+  * Verified that source was up-to-date
+  * Major cleanup on the build and install
+  * Fixed all of the compilation warnings for ia64
+  * Added /usr/share/doc/lmbench-doc to include copies of all man pages
+    since there are overlaps with other packages that need to be avoided.
+  * Moved /usr/include/* files to /usr/include/lmbench/* to avoid future
+    collisions
+  * Closes: bug#260783 -- collides with plotutils (graph.1.gz)
+  * Closes: bug#260792 -- collides with util-linux (clock.8.gz)
+  * Removed bargraph.1.gz from lmbench, put in lmbench-doc to minimize
+    future collisions
+  * Removed {hello,flushdisk,memsize}.8.gz from lmbench, put in the 
+    lmbench-doc package to minimize future collisions
+
+ -- Al Stone <ahs3@debian.org>  Thu,  2 Sep 2004 15:08:12 -0600
+
+lmbench (2.0-patch2-6) unstable; urgency=low
+
+  * Removed the need to have BitKeeper at all, which should allow us to
+    build most anywhere
+  * Cleaned up most of the remaining lintian stuff
+  * Closes: bug#216883: ITA -- set myself as new maintainer
+  * Updated Debian standards compliance 
+
+ -- Al Stone <ahs3@debian.org>  Tue, 20 Jul 2004 21:36:22 -0600
+
+lmbench (2.0-patch2-5) unstable; urgency=low
+
+  * Make the test run use a directory in the package (which is cleaned
+    afterwards)
+  * Only call 'bk' on clean if it's available
+  * Minor lintian fix
+
+ -- Javier Fernandez-Sanguino Pen~a <jfs@computer.org>  Thu, 10 Jun 2004 01:38:43 +0200
+
+lmbench (2.0-patch2-4) unstable; urgency=low
+
+  * Fixed location of results in README.Debian
+
+ -- Javier Fernandez-Sanguino Pen~a <jfs@computer.org>  Mon, 10 Jun 2002 14:34:31 +0200
+
+lmbench (2.0-patch2-3.1) unstable; urgency=low
+
+  * A possible fix for arm contributed by Agustin Martin Domingo
+  (Closes: #138260). 
+  * Please test this in arm box 
+    - src/Makefile: Changing CFLAGS=-O to CFLAGS=$(OPTIMIZATION)
+    - debian/rules: using dpkg-architecture to guess target system and set
+      OPTIMIZATION accordingly.
+
+ -- Javier Fernandez-Sanguino Pen~a <jfs@computer.org>  Tue, 14 May 2002 19:31:52 +0200
+
+lmbench (2.0-patch2-3) unstable; urgency=high
+
+  * Moved to non-free (Closes: #139039)
+  * Fixed description (Closes: #141148)
+  * Fixed lmbench-run which pointed users (in the end) to go to /usr
+    instead of /var (as fixed in -2) (Closes: #138563)
+
+ -- Javier Fernandez-Sanguino Pen~a <jfs@computer.org>  Fri,  5 Apr 2002 16:46:15 +0200
+
+lmbench (2.0-patch2-2) unstable; urgency=medium
+
+  * Added CONFIGDIR and make it point to /var/lib/lmbench/config
+  * Configuration now saved in $CONFIGDIR (Closes: #137919)
+  * Results now saved in $RESULTSDIR under /var/...
+  * Changed --purge so it removes the created files under /var/...
+  * Created a RUNDIR so that compilation (gnu-os script) is done
+  there just in case any cruft (tempfiles) are left there.
+
+ -- Javier Fernandez-Sanguino Pen~a <jfs@computer.org>  Tue, 12 Mar 2002 10:39:16 +0100
+
+lmbench (2.0-patch2-1) unstable; urgency=low
+
+  * Initial Release.
+  * Changed the code so it works in Debian GNU/Linux by placing
+  all files in /usr/share and adding a wrapper script (lmbench-run)
+  to run the configuration and result generation
+
+ -- Javier Fernandez-Sanguino Pen~a <jfs@computer.org>  Tue, 19 Feb 2002 22:01:31 +0100
+
