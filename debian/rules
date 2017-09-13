@@ -3,6 +3,8 @@
 # Uncomment this to turn on verbose mode. 
 #export DH_VERBOSE=1
 
+CONFLICTING_MANPAGES := graph.1 rccs.1 bargraph.1
+
 %:
 	dh $@
 
@@ -24,23 +26,11 @@ override_dh_auto_install:
 		debian/scripts/TODO debian/scripts/info-template
 
 	rm -rf debian/doc && cp -a doc debian
-
-	# Install all of the manpages w/ dh_installdocs in lmbench-doc,
-	# just in case...
-	mkdir debian/doc/man
-	cp debian/doc/*.[1-9] debian/doc/man
-
-	# ... and install them with dh_installman in lmbench, excluding
-	# those that conflict with manpages from other packages.
 	rm -rf debian/manpages && mkdir debian/manpages
-	find debian/doc/man -type f \
-		-not -name graph.1 \
-		-not -name rccs.1 \
-		-not -name bargraph.8 \
-		-not -name hello.8 \
-		-exec cp {} debian/manpages \;
-
-	# man can deal with compressed manpages.
-	gzip debian/doc/man/*
+	mv debian/doc/*.[1-9] debian/manpages
+	for manpage in $(CONFLICTING_MANPAGES); do \
+		mv debian/manpages/$$manpage \
+			debian/manpages/lmbench-$$manpage; \
+	done
 
 	dh_auto_install

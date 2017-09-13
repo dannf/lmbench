@@ -15,6 +15,9 @@ lmbench (3.0-a9+debian.1-1) UNRELEASED; urgency=medium
     as recommended by §12.3 since 3.9.7.
   * Do not generate lmbench-run manpage if DEB_BUILD_OPTIONS contains
     'nodocs'.
+  * Add a "lmbench-" prefix to manpages that conflict with other packages.
+    Since this allows us to include all of the manpages in lmbench, stop
+    including separate copies in lmbench-doc.
 
  -- dann frazier <dannf@debian.org>  Tue, 12 Sep 2017 15:45:03 -0600
 
