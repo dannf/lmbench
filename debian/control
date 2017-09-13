@@ -3,7 +3,7 @@ Section: non-free/admin
 Priority: optional
 Maintainer: Al Stone <ahs3@debian.org>
 Uploaders: dann frazier <dannf@debian.org>
-Build-Depends: docbook-to-man, debhelper (>= 5)
+Build-Depends: docbook-to-man, debhelper (>= 10)
 Standards-Version: 3.8.0
 Homepage: http://www.bitmover.com/lmbench/
 XS-Autobuild: yes

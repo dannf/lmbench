@@ -1,0 +1,5 @@
+bin/* usr/lib/lmbench/bin
+results/* usr/share/lmbench/results
+debian/scripts/* usr/lib/lmbench/scripts
+src/webpage-lm.tar usr/share/lmbench/src
+debian/lmbench-run usr/bin
