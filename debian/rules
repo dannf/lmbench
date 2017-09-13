@@ -16,22 +16,8 @@ else
 OPTIMIZATION=-O
 endif
 
-LMBENCH_VERSION=3.0-a9
-
-unpack: unpack-stamp
-unpack-stamp:
-	dh_testdir
-	tar xvzf lmbench-$(LMBENCH_VERSION).tgz
-	touch unpack-stamp
-
-patch: patch-stamp
-patch-stamp: unpack
-	dh_testdir
-	dpatch apply-all
-	touch patch-stamp
-
 configure: configure-stamp
-configure-stamp: patch
+configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
 
@@ -44,21 +30,18 @@ build-stamp: configure-stamp
 	dh_testdir
 
 	# Add here commands to compile the package.
-	$(MAKE) -C lmbench-$(LMBENCH_VERSION)
+	$(MAKE)
 	docbook-to-man debian/lmbench-run.sgml >debian/lmbench-run.1
 
 	touch build-stamp
-
-unpatch: clean unpack
 
 clean:
 	dh_testdir
 	dh_testroot
 	-rm debian/lmbench-run.1
 	-rm -rf run/
-	rm -f build-stamp configure-stamp unpack-stamp patch-stamp
-	rm -rf debian/patched
-	rm -rf lmbench-$(LMBENCH_VERSION)
+	rm -f build-stamp configure-stamp
+	$(MAKE) clean
 	dh_clean
 	rm -f debian/files
 
@@ -70,22 +53,22 @@ install: build
 	dh_installdirs
 
 	#-- install all the lmbench binaries and such
-	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench \
 		bin usr/lib/lmbench
-	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench \
 		results usr/share/lmbench
-	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench \
 		scripts usr/lib/lmbench
 	mv debian/lmbench/usr/lib/lmbench/scripts/SHIT \
 	   debian/lmbench/usr/lib/lmbench/scripts/STUFF
-	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench \
 		src/webpage-lm.tar usr/share/lmbench/src
 	install -m 755 debian/lmbench-run \
 		 $(CURDIR)/debian/lmbench/usr/bin
 	dh_install -p lmbench debian/lmbench-run.1 usr/share/man/man1
 	dh_link usr/share/man/man8/lmbench.8.gz usr/share/man/man8/lmhttp.8.gz
 	dh_link usr/share/man/man8/lmbench.8.gz usr/share/man/man8/msleep.8.gz
-	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench \
 		README usr/share/doc/lmbench
 	chmod -x debian/lmbench/usr/lib/lmbench/scripts/Makefile
 	chmod -x debian/lmbench/usr/lib/lmbench/scripts/README
@@ -93,21 +76,21 @@ install: build
 	chmod -x debian/lmbench/usr/lib/lmbench/scripts/info-template
 
 	#-- install the documentation
-	dh_install -p lmbench-doc --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench-doc \
 		hbench-REBUTTAL usr/share/doc/lmbench-doc
-	dh_install -p lmbench-doc --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench-doc \
 		src/TODO usr/share/doc/lmbench-doc
-	dh_install -p lmbench-doc --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench-doc \
 		doc/* usr/share/doc/lmbench-doc
-	dh_install -p lmbench-doc --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench-doc \
 		README usr/share/doc/lmbench-doc
 
 	#-- install all the man pages
-	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench \
 		doc/*.1 usr/share/man/man1
-	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench \
 		doc/*.3 usr/share/man/man3
-	dh_install -p lmbench --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench \
 		doc/*.8 usr/share/man/man8
 
 	#-- but move some that have duplicate names in other packages,
@@ -116,7 +99,7 @@ install: build
 	rm -f debian/lmbench/usr/share/man/man1/rccs.1
 	rm -f debian/lmbench/usr/share/man/man8/bargraph.8
 	rm -f debian/lmbench/usr/share/man/man8/hello.8
-	dh_install -p lmbench-doc --sourcedir=lmbench-$(LMBENCH_VERSION) \
+	dh_install -p lmbench-doc \
 		doc/*.[1-9] usr/share/doc/lmbench-doc/man
 	gzip debian/lmbench-doc/usr/share/doc/lmbench-doc/man/*
 
@@ -133,7 +116,7 @@ install: build
 binary-indep: build install
 	dh_testdir -i
 	dh_testroot -i
-	dh_installdocs --sourcedir=lmbench-$(LMBENCH_VERSION) -i
+	dh_installdocs -i
 	dh_installchangelogs  -i
 	dh_link -i
 	dh_compress -i
@@ -147,7 +130,7 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir -a
 	dh_testroot -a
-	dh_installdocs --sourcedir=lmbench-$(LMBENCH_VERSION) -a
+	dh_installdocs -a
 	dh_installchangelogs  -a
 	dh_strip -a
 	dh_link -a
