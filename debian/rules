@@ -8,7 +8,9 @@
 
 override_dh_auto_build:
 	dh_auto_build
+ifeq (,$(filter nodoc,$(DEB_BUILD_OPTIONS)))
 	docbook-to-man debian/lmbench-run.sgml >debian/lmbench-run.1
+endif
 
 override_dh_auto_clean:
 	dh_auto_clean
