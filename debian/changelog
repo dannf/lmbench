@@ -8,6 +8,7 @@ lmbench (3.0-a9+debian.1-1) UNRELEASED; urgency=medium
   * Switch to dpkg-source 3.0 (quilt) format from dpatch, which is
     deprecated.  (Closes: #875644)
   * Add myself to Uploaders.
+  * debian/rules: Remove unused H_ARCH/OPTIMIZATION variables.
 
  -- dann frazier <dannf@debian.org>  Tue, 12 Sep 2017 15:45:03 -0600
 
