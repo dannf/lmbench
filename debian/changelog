@@ -20,6 +20,7 @@ lmbench (3.0-a9+debian.1-1) UNRELEASED; urgency=medium
     including separate copies in lmbench-doc.
   * d/p/dynamic-tcp-backlog.patch: Dynamically increase the TCP backlog on
     high core-count systems. (LP: #1706735)
+  * Bump Standards-Version to 4.1.0.
 
  -- dann frazier <dannf@debian.org>  Tue, 12 Sep 2017 15:45:03 -0600
 
