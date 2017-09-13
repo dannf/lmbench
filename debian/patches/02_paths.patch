@@ -1,13 +1,7 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## 02_paths.dpatch by  <ahs3@fcboson>
-##
-## All lines beginning with `## DP:' are a description of the patch.
-## DP: No description.
-
-@DPATCH@
-diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3.0-a9/scripts/config-run
---- lmbench-3.0~/lmbench-3.0-a9/scripts/config-run	2005-09-04 05:04:28.000000000 -0600
-+++ lmbench-3.0/lmbench-3.0-a9/scripts/config-run	2006-03-21 17:50:36.000000000 -0700
+Index: lmbench-3.0-a9+debian.1/scripts/config-run
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/config-run
++++ lmbench-3.0-a9+debian.1/scripts/config-run
 @@ -3,7 +3,10 @@
  # Configure parameters for lmbench.
  # %I% %E% %@%
@@ -20,7 +14,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  L='====================================================================='
  echo $L; 
  cat<<EOF;
-@@ -36,20 +39,20 @@
+@@ -132,20 +135,20 @@ export LMBENCH_SCHED
  ############################################################################
  echo $L; echo "";
  echo "Hang on, we are calculating your timing granularity."
@@ -47,7 +41,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  export LOOP_O
  echo "OK, it looks like your benchmark loop costs $LOOP_O usecs."
  echo ""
-@@ -164,7 +167,7 @@
+@@ -177,7 +180,7 @@ then
  fi
  if [ X$MB = X ]
  then	$ECHON "Probing system for available memory: $ECHOC"
@@ -56,7 +50,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  fi
  TOTAL_MEM=$MB
  MB=`echo \( $MB \* 7 \) / 10 | bc 2>/dev/null`
-@@ -192,9 +195,9 @@
+@@ -205,9 +208,9 @@ fi
  # Certain machines tend to barf when you try and bcopy 8MB.
  # Figure out how much we can use.
  echo "Checking to see if you have $MB MB; please wait for a moment..."
@@ -69,7 +63,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  if [ `expr $SYNC_MAX \* $MB` -gt `expr $TOTAL_MEM` ]
  then
  	MB=`expr $TOTAL_MEM / $SYNC_MAX`
-@@ -210,8 +213,8 @@
+@@ -223,8 +226,8 @@ then	echo Warning: you have only ${MB}MB
  fi
  
  echo "Hang on, we are calculating your cache line size."
@@ -80,7 +74,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  export LINE_SIZE
  echo "OK, it looks like your cache line is $LINE_SIZE bytes."
  echo ""
-@@ -459,7 +462,7 @@
+@@ -479,7 +482,7 @@ EOF
  	then	
  		for i in $disks
  		do	if [ -r $i ]
@@ -89,7 +83,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  				if [ $? -eq 1 ]
  				then	echo "Must be root to run disk benchmarks."
  					echo "Root is needed to flush the buffer cache"
-@@ -564,7 +567,7 @@
+@@ -584,7 +587,7 @@ fi
  echo $L
  echo ""
  echo "Calculating mhz, please wait for a moment..."
@@ -98,7 +92,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  cat<<EOF
  I think your CPU mhz is 
  
-@@ -667,11 +670,11 @@
+@@ -687,11 +690,11 @@ case $MAIL in
  		;;
  esac
  
@@ -114,7 +108,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  		REUSE=no
  	else	
  		REUSE=view
-@@ -685,7 +688,7 @@
+@@ -705,7 +708,7 @@ then	if [ ! -f ../bin/$OS/$INFO ]
  				;;
  			[Vv]*)	REUSE=view
  				echo $L
@@ -123,7 +117,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  				echo $L
  				;;
  	    		*)	REUSE=yes
-@@ -713,7 +716,7 @@
+@@ -733,7 +736,7 @@ EOF
  		then	EDITOR=$TMP
  		fi
  		if [ X$EDITOR != "none" ]
@@ -132,7 +126,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  		fi
  	fi
  fi
-@@ -728,9 +731,9 @@
+@@ -748,9 +751,9 @@ Send mail to majordomo@bitmover.com to j
  
  EOF
  
@@ -144,9 +138,10 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-run lmbench-3.0/lmbench-3
  echo DISKS=\"$DISKS\" > $C
  echo DISK_DESC=\"$DISK_DESC\" >> $C
  echo OUTPUT=$OUTPUT >> $C
-diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-scaling lmbench-3.0/lmbench-3.0-a9/scripts/config-scaling
---- lmbench-3.0~/lmbench-3.0-a9/scripts/config-scaling	2005-03-30 02:54:05.000000000 -0700
-+++ lmbench-3.0/lmbench-3.0-a9/scripts/config-scaling	2006-03-21 17:51:13.000000000 -0700
+Index: lmbench-3.0-a9+debian.1/scripts/config-scaling
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/config-scaling
++++ lmbench-3.0-a9+debian.1/scripts/config-scaling
 @@ -7,7 +7,8 @@
  # $Id$
  
@@ -157,9 +152,10 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/config-scaling lmbench-3.0/lmben
  export PATH
  
  if [ ! -f $1 ]; then exit 1; fi
-diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/do_ctx lmbench-3.0/lmbench-3.0-a9/scripts/do_ctx
---- lmbench-3.0~/lmbench-3.0-a9/scripts/do_ctx	2000-01-31 16:05:45.000000000 -0700
-+++ lmbench-3.0/lmbench-3.0-a9/scripts/do_ctx	2006-03-21 17:51:43.000000000 -0700
+Index: lmbench-3.0-a9+debian.1/scripts/do_ctx
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/do_ctx
++++ lmbench-3.0-a9+debian.1/scripts/do_ctx
 @@ -1,7 +1,9 @@
  #!/bin/sh
  
@@ -171,9 +167,10 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/do_ctx lmbench-3.0/lmbench-3.0-a
  export PATH
  
  if [ X$MB = X ]
-diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/lmbench lmbench-3.0/lmbench-3.0-a9/scripts/lmbench
---- lmbench-3.0~/lmbench-3.0-a9/scripts/lmbench	2005-03-30 02:54:05.000000000 -0700
-+++ lmbench-3.0/lmbench-3.0-a9/scripts/lmbench	2006-03-21 17:52:08.000000000 -0700
+Index: lmbench-3.0-a9+debian.1/scripts/lmbench
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/lmbench
++++ lmbench-3.0-a9+debian.1/scripts/lmbench
 @@ -7,7 +7,10 @@
  # $Id$
  
@@ -186,7 +183,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/lmbench lmbench-3.0/lmbench-3.0-
  export PATH
  
  if [ -f $1 ]
-@@ -235,14 +238,14 @@
+@@ -237,14 +240,14 @@ fi
  
  date >> ${OUTPUT}
  echo Local networking >> ${OUTPUT}
@@ -204,7 +201,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/lmbench lmbench-3.0/lmbench-3.0-
  sleep 2;
  
  if [ X$BENCHMARK_OS = XYES -o X$BENCHMARK_UDP = XYES ]; then
-@@ -278,19 +281,19 @@
+@@ -280,19 +283,19 @@ bw_tcp -S localhost
  
  if [ X$BENCHMARK_OS = XYES -o X$BENCHMARK_HTTP = XYES ]; then
  	# I want a hot cache number
@@ -228,7 +225,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/lmbench lmbench-3.0/lmbench-3.0-
  	sleep 10
  	echo "[ Networking remote to $remote: `$RSH $remote uname -a` ]" 1>&2
  	if [ X$BENCHMARK_OS = XYES -o X$BENCHMARK_UDP = XYES ]; then
-@@ -325,8 +328,8 @@
+@@ -327,8 +330,8 @@ do
  
  	if [ X$BENCHMARK_OS = XYES -o X$BENCHMARK_HTTP = XYES ]; then
  		# I want a hot cache number
@@ -239,16 +236,17 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/lmbench lmbench-3.0/lmbench-3.0-
  	fi
  	lat_http -S $remote 8008
  
-diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/os lmbench-3.0/lmbench-3.0-a9/scripts/os
---- lmbench-3.0~/lmbench-3.0-a9/scripts/os	2005-01-03 02:02:33.000000000 -0700
-+++ lmbench-3.0/lmbench-3.0-a9/scripts/os	2006-03-21 17:52:43.000000000 -0700
+Index: lmbench-3.0-a9+debian.1/scripts/os
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/os
++++ lmbench-3.0-a9+debian.1/scripts/os
 @@ -1,4 +1,5 @@
  #!/bin/sh
 +SCRIPTSDIR=${SCRIPTSDIR:-../scripts}
  
- if [ "X$OS" != "X" ] && echo "$OS" | grep -q '`'
+ if [ "X$OS" != "X" ] && echo "$OS" | grep '`' > /dev/null
  then
-@@ -10,8 +11,8 @@
+@@ -10,8 +11,8 @@ then	OS=bloat-os
      MACHINE=`uname -m | sed -e 's/ //g' | sed -e 's?/?-?g'`
      SYSTEM=`uname -s | sed -e 's/ //g' | sed -e 's?/?-?g'`
      OS="${MACHINE}-${SYSTEM}"
@@ -259,21 +257,23 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/os lmbench-3.0/lmbench-3.0-a9/sc
      fi
      if [ -f ../../scripts/gnu-os ]
      then	OS=`../../scripts/gnu-os | sed s/unknown-//`
-diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/results lmbench-3.0/lmbench-3.0-a9/scripts/results
---- lmbench-3.0~/lmbench-3.0-a9/scripts/results	2003-03-10 01:27:51.000000000 -0700
-+++ lmbench-3.0/lmbench-3.0-a9/scripts/results	2006-03-21 17:57:03.000000000 -0700
+Index: lmbench-3.0-a9+debian.1/scripts/results
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/results
++++ lmbench-3.0-a9+debian.1/scripts/results
 @@ -1,21 +1,24 @@
  #!/bin/sh
  
  # $Id$
-+SCRIPTSDIR=${SCRIPTSDIR:-../scripts}
-+BINDIR=${BINDIR:-..}
-+RESULTSDIR=${RESULTSDIR:-../results}
- 
+-
 -OS=`../scripts/os`
 -CONFIG=`../scripts/config`
 -RESULTS=results/$OS
 -BASE=../$RESULTS/`uname -n`
++SCRIPTSDIR=${SCRIPTSDIR:-../scripts}
++BINDIR=${BINDIR:-..}
++RESULTSDIR=${RESULTSDIR:-../results}
++
 +OS=`${SCRIPTSDIR}/os`
 +CONFIG=`${SCRIPTSDIR}/config`
 +RESULTS=${RESULTSDIR}/$OS
@@ -295,7 +295,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/results lmbench-3.0/lmbench-3.0-
  fi
  RESULTS=$BASE.$EXT
  while [ -f $RESULTS ]
-@@ -23,17 +26,17 @@
+@@ -23,17 +26,17 @@ do      EXT=`expr $EXT + 1`
  	RESULTS=$BASE.$EXT
  done
  
@@ -316,9 +316,10 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/results lmbench-3.0/lmbench-3.0-
 +	cat $RESULTS) | mail lmbench3@bitmover.com 
  fi
  exit 0
-diff -urNad lmbench-3.0~/lmbench-3.0-a9/scripts/version lmbench-3.0/lmbench-3.0-a9/scripts/version
---- lmbench-3.0~/lmbench-3.0-a9/scripts/version	2005-09-04 05:04:28.000000000 -0600
-+++ lmbench-3.0/lmbench-3.0-a9/scripts/version	2006-03-21 17:58:27.000000000 -0700
+Index: lmbench-3.0-a9+debian.1/scripts/version
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/version
++++ lmbench-3.0-a9+debian.1/scripts/version
 @@ -1,10 +1,11 @@
  #!/bin/sh
  

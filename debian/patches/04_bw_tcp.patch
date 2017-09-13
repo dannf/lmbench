@@ -1,0 +1,11 @@
+Index: lmbench-3.0-a9+debian.1/doc/bw_tcp.8
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/doc/bw_tcp.8
++++ lmbench-3.0-a9+debian.1/doc/bw_tcp.8
+@@ -1,5 +1,5 @@
+ .\" $Id$
+-.TH BW_TCP 1 "$Date$" "(c)1994 Larry McVoy" "LMBENCH"
++.TH BW_TCP 8 "$Date$" "(c)1994 Larry McVoy" "LMBENCH"
+ .SH NAME
+ bw_tcp \- time data movement through TCP/IP sockets
+ .SH SYNOPSIS

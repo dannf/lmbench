@@ -5,6 +5,8 @@ lmbench (3.0-a9+debian.1-1) UNRELEASED; urgency=medium
     upstream version to avoid conflicting with the previous orig.tar.gz.
     The previous orig.tar.gz was a tarball that contained the upstream
     tarball, which had to be unpacked prior to build in debian/rules.
+  * Switch to dpkg-source 3.0 (quilt) format from dpatch, which is
+    deprecated.  (Closes: #875644)
 
  -- dann frazier <dannf@debian.org>  Tue, 12 Sep 2017 15:45:03 -0600
 

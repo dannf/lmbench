@@ -1,0 +1,13 @@
+Index: lmbench-3.0-a9+debian.1/doc/lmbench.3
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/doc/lmbench.3
++++ lmbench-3.0-a9+debian.1/doc/lmbench.3
+@@ -25,7 +25,7 @@ lmbench \- benchmarking toolbox
+ .B "void	micro(char *s, uint64 n)"
+ .LP
+ .B "void	nano(char *s, uint64 n)"
+-.lP
++.LP
+ .B "void	mb(uint64 bytes)"
+ .LP
+ .B "void	kb(uint64 bytes)"

@@ -1,0 +1,83 @@
+Index: lmbench-3.0-a9+debian.1/scripts/build
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/build
++++ lmbench-3.0-a9+debian.1/scripts/build
+@@ -9,7 +9,7 @@ CONFIG=../bin/"${OS}"/`../scripts/config
+ NULL=/dev/null
+ 
+ BASE=/tmp/dummy
+-for t in /usr/tmp /var/tmp /tmp; do
++for t in /var/tmp /tmp; do
+ 	if [ -d $t -a -w $t ]
+ 	then	BASE=${t}/dummy
+ 		break
+Index: lmbench-3.0-a9+debian.1/scripts/config-run
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/config-run
++++ lmbench-3.0-a9+debian.1/scripts/config-run
+@@ -611,7 +611,7 @@ fi
+ 
+ 
+ ############################################################################
+-# /usr/tmp?
++# /var/tmp?
+ ############################################################################
+ echo $L
+ AGAIN=Y
+@@ -620,14 +620,14 @@ do
+ 	cat<<EOF;
+ 
+ We need a place to store a $MB Mbyte file as well as create and delete a
+-large number of small files.  We default to /usr/tmp.  If /usr/tmp is a
++large number of small files.  We default to /var/tmp.  If /var/tmp is a
+ memory resident file system (i.e., tmpfs), pick a different place.
+ Please specify a directory that has enough space and is a local file
+ system.
+ 
+ EOF
+-	DEFAULTFSDIR=/usr/tmp
+-	for t in /usr/tmp /var/tmp /tmp; do
++	DEFAULTFSDIR=/var/tmp
++	for t in /var/tmp /tmp; do
+ 		if [ -d $t -a -w $t ]
+ 		then	DEFAULTFSDIR=$t
+ 			break
+Index: lmbench-3.0-a9+debian.1/scripts/gnu-os
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/gnu-os
++++ lmbench-3.0-a9+debian.1/scripts/gnu-os
+@@ -90,7 +90,7 @@ fi
+ 
+ trap 'exit 1' 1 2 15
+ 
+-for t in /usr/tmp /var/tmp /tmp; do
++for t in /var/tmp /tmp; do
+ 	if [ -d $t -a -w $t ]
+ 	then	TMPDIR=$t
+ 		break
+Index: lmbench-3.0-a9+debian.1/scripts/lmbench
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/scripts/lmbench
++++ lmbench-3.0-a9+debian.1/scripts/lmbench
+@@ -48,7 +48,7 @@ done
+ 
+ 
+ if [ X$FSDIR = X ]
+-then	FSDIR=/usr/tmp/lat_fs
++then	FSDIR=/var/tmp/lmbench/lat_fs
+ fi
+ MP=N
+ if [ $SYNC_MAX -gt 1 ]
+Index: lmbench-3.0-a9+debian.1/src/lmhttp.c
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/src/lmhttp.c
++++ lmbench-3.0-a9+debian.1/src/lmhttp.c
+@@ -20,7 +20,7 @@ char	*id = "$Id$\n";
+ #	define	MMAP_FLAGS	MAP_SHARED
+ #endif
+ #define	MMAPS_BETTER	(4<<10)	/* mmap is faster for sizes >= this */
+-#define	LOGFILE		"/usr/tmp/lmhttp.log"
++#define	LOGFILE		"/var/tmp/lmbench/lmhttp.log"
+ 
+ char	*buf;
+ char	*bufs[3];

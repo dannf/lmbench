@@ -1,0 +1,8 @@
+01_clean_script_warnings.patch
+02_paths.patch
+03_man_pages.patch
+04_bw_tcp.patch
+05_no_usr_write.patch
+06_lmbench3_man.patch
+07_tmp_symlinks.patch
+08_defaultfsdir.patch

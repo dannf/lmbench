@@ -1,14 +1,8 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## 03_man_pages.dpatch by  <ahs3@fcboson>
-##
-## All lines beginning with `## DP:' are a description of the patch.
-## DP: No description.
-
-@DPATCH@
-diff -urNad lmbench-3.0~/lmbench-3.0-a9/doc/lat_mmap.8 lmbench-3.0/lmbench-3.0-a9/doc/lat_mmap.8
---- lmbench-3.0~/lmbench-3.0-a9/doc/lat_mmap.8	2000-10-16 09:14:01.000000000 -0600
-+++ lmbench-3.0/lmbench-3.0-a9/doc/lat_mmap.8	2006-03-21 23:21:13.000000000 -0700
-@@ -18,7 +18,7 @@
+Index: lmbench-3.0-a9+debian.1/doc/lat_mmap.8
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/doc/lat_mmap.8
++++ lmbench-3.0-a9+debian.1/doc/lat_mmap.8
+@@ -18,7 +18,7 @@ lat_mmap \- costs of mmapping and unmmap
  .SH DESCRIPTION
  .B lat_mmap
  times how fast a mapping can be made and unmade.  This is useful because it
@@ -17,10 +11,11 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/doc/lat_mmap.8 lmbench-3.0/lmbench-3.0-a
  (the libraries are mapped in at process start up time and unmapped at 
  process exit).
  .LP
-diff -urNad lmbench-3.0~/lmbench-3.0-a9/doc/lmbench.8 lmbench-3.0/lmbench-3.0-a9/doc/lmbench.8
---- lmbench-3.0~/lmbench-3.0-a9/doc/lmbench.8	2000-10-16 09:14:01.000000000 -0600
-+++ lmbench-3.0/lmbench-3.0-a9/doc/lmbench.8	2006-03-21 23:21:23.000000000 -0700
-@@ -37,7 +37,7 @@
+Index: lmbench-3.0-a9+debian.1/doc/lmbench.8
+===================================================================
+--- lmbench-3.0-a9+debian.1.orig/doc/lmbench.8
++++ lmbench-3.0-a9+debian.1/doc/lmbench.8
+@@ -37,7 +37,7 @@ the results it reports.  The default num
  .I repetitions
  is 11.
  .SH BANDWIDTH MEASUREMENTS
@@ -29,7 +24,7 @@ diff -urNad lmbench-3.0~/lmbench-3.0-a9/doc/lmbench.8 lmbench-3.0/lmbench-3.0-a9
  The bandwidth measurements are intended to show how the system can move
  data.  The results of the bandwidth metrics can be compared but care
  must be taken to understand what it is that is being compared.  The
-@@ -75,7 +75,7 @@
+@@ -75,7 +75,7 @@ reading of data via a TCP/IP socket.
  bw_unix
  reading data from a UNIX socket.
  .SH LATENCY MEASUREMENTS

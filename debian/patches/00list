@@ -1,9 +1,0 @@
-# which patches to be applied in what order
-01_clean_script_warnings.dpatch
-02_paths.dpatch
-03_man_pages.dpatch
-04_bw_tcp.dpatch
-05_no_usr_write.dpatch
-06_lmbench3_man.dpatch
-07_tmp_symlinks.dpatch
-08_defaultfsdir.dpatch
