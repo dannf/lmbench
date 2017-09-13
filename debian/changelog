@@ -18,6 +18,8 @@ lmbench (3.0-a9+debian.1-1) UNRELEASED; urgency=medium
   * Add a "lmbench-" prefix to manpages that conflict with other packages.
     Since this allows us to include all of the manpages in lmbench, stop
     including separate copies in lmbench-doc.
+  * d/p/dynamic-tcp-backlog.patch: Dynamically increase the TCP backlog on
+    high core-count systems. (LP: #1706735)
 
  -- dann frazier <dannf@debian.org>  Tue, 12 Sep 2017 15:45:03 -0600
 

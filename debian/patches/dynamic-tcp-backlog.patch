@@ -1,0 +1,43 @@
+Description: Dynamically increase the TCP backlog on high core-count systems
+Author: Shay Gal-On <sgalon@caviumnetworks.com>
+Origin: other, https://bugs.launchpad.net/ubuntu/+source/lmbench/+bug/1706735
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1706735
+Forwarded: no
+Last-Update: 2017-09-13
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+Index: lmbench/src/lib_tcp.c
+===================================================================
+--- lmbench.orig/src/lib_tcp.c
++++ lmbench/src/lib_tcp.c
+@@ -7,6 +7,7 @@
+  */
+ #define		_LIB /* bench.h needs this */
+ #include	"bench.h"
++#include	<unistd.h>
+ 
+ /*
+  * Get a TCP socket, bind it, figure out the port,
+@@ -17,7 +18,7 @@
+ int
+ tcp_server(int prog, int rdwr)
+ {
+-	int	sock;
++	int	sock, np, backlog = 100;
+ 	struct	sockaddr_in s;
+ 
+ #ifdef	LIBTCP_VERBOSE
+@@ -37,7 +38,12 @@ tcp_server(int prog, int rdwr)
+ 		perror("bind");
+ 		exit(2);
+ 	}
+-	if (listen(sock, 100) < 0) {
++	/* Increase the backlog dynamically if we're on a system with a
++           large number of cores to avoid hangs. */
++	np = sysconf(_SC_NPROCESSORS_ONLN);
++	if (np * 4 > backlog)
++		backlog = np * 4;
++	if (listen(sock, backlog) < 0) {
+ 		perror("listen");
+ 		exit(4);
+ 	}
