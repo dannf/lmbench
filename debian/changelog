@@ -11,6 +11,8 @@ lmbench (3.0-a9+debian.1-1) UNRELEASED; urgency=medium
   * debian/rules: Remove unused H_ARCH/OPTIMIZATION variables.
   * debian/info: Remove. The listed file does not exist in the source.
   * Turn debhelper compat level up to 11.
+  * Allow lmbench-docs to install most documentation in the main package,
+    as recommended by §12.3 since 3.9.7.
 
  -- dann frazier <dannf@debian.org>  Tue, 12 Sep 2017 15:45:03 -0600
 

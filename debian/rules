@@ -42,7 +42,3 @@ override_dh_auto_install:
 	gzip debian/doc/man/*
 
 	dh_auto_install
-
-override_dh_installdocs:
-	dh_installdocs -plmbench-doc --doc-main-package=lmbench-doc
-	dh_installdocs -Nlmbench-doc
